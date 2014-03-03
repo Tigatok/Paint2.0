@@ -1,3 +1,4 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,6 +12,7 @@ import javax.swing.JComponent;
 
 public class Painter extends JComponent {
 	private static final long serialVersionUID = 1L;
+
 	Image image;// The image that we draw on.
 	Graphics2D g2D;// This is what we use to draw on.
 	int currentX, currentY, oldX, oldY; // mouse coords
@@ -23,10 +25,15 @@ public class Painter extends JComponent {
 	private boolean checkSharpie;
 	private boolean checkEraser;
 	private boolean checkPencil = true;
+	private boolean checkSmallSize = true;
+	private boolean checkMedSize = false;
+	private boolean checkLargeSize = false;
 
 	// Constructors:
 	public Painter() {
+
 		setDoubleBuffered(false);
+
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				// If the mouse is pressed, it sets the old x and old y
@@ -42,7 +49,9 @@ public class Painter extends JComponent {
 					g2D.drawLine(oldX, oldY, currentX, currentY);
 					repaint();
 				} else if (checkSquare) {
-					g2D.fillRect(currentX, currentY, getXSize(), getYSize());
+					g2D.setStroke(new BasicStroke(getXSize()));
+					g2D.drawLine(oldX, oldY, currentX, currentY);
+					// g2D.fillRect(currentX, currentY, getXSize(), getYSize());
 					repaint();
 				} else if (checkSharpie) {
 					g2D.fillRect(currentX, currentY, getXSize() / 2,
@@ -50,7 +59,8 @@ public class Painter extends JComponent {
 					repaint();
 				} else if (checkEraser) {
 					g2D.setPaint(Color.WHITE);
-					g2D.fillOval(currentX, currentY, getXSize(), getYSize());
+					g2D.setStroke(new BasicStroke(getXSize()));
+					g2D.drawLine(oldX, oldY, currentX, currentY);
 					g2D.setPaint(Color.BLACK);
 					repaint();
 				} else if (checkCircle) {
@@ -72,10 +82,12 @@ public class Painter extends JComponent {
 				currentX = e.getX();
 				currentY = e.getY();
 				if (checkPencil) {
+					// g2D.setStroke(new BasicStroke(getXSize()));
 					g2D.drawLine(oldX, oldY, currentX, currentY);
 					repaint();
 				} else if (checkSquare) {
-					g2D.fillRect(currentX, currentY, getXSize(), getYSize());
+					g2D.setStroke(new BasicStroke(getXSize()));
+					g2D.drawLine(oldX, oldY, currentX, currentY);
 					repaint();
 				} else if (checkSharpie) {
 					g2D.fillRect(currentX, currentY, getXSize() / 2,
@@ -83,10 +95,13 @@ public class Painter extends JComponent {
 					repaint();
 				} else if (checkEraser) {
 					g2D.setPaint(Color.WHITE);
-					g2D.fillRect(currentX, currentY, getXSize(), getYSize());
+					g2D.setStroke(new BasicStroke(getXSize()));
+					g2D.drawLine(oldX, oldY, currentX, currentY);
 					g2D.setPaint(Color.BLACK);
 					repaint();
 				} else if (checkCircle) {
+					// g2D.setStroke(new BasicStroke(getXSize()));
+					// g2D.drawOval(oldX, oldY, currentX, currentY);
 					g2D.fillOval(currentX, currentY, getXSize(), getYSize());
 					repaint();
 				}
@@ -119,9 +134,9 @@ public class Painter extends JComponent {
 	}
 
 	// This is the clear
-	// it sets the color to white
+	// it sets the colour to white
 	// then it fills the window with white
-	// then it sets the color back to black
+	// then it sets the colour back to black
 	public void clear() {
 		g2D.setPaint(Color.white);
 		g2D.fillRect(0, 0, getSize().width, getSize().height);
@@ -199,6 +214,8 @@ public class Painter extends JComponent {
 	}
 
 	public void pencilTool() {
+		setXSize(5);
+		setYSize(5);
 		checkCircle = false;
 		checkSquare = false;
 		checkSharpie = false;
@@ -212,5 +229,30 @@ public class Painter extends JComponent {
 
 	public int getYSize() {
 		return ySize;
+	}
+
+	public void setXSize(int i) {
+		xSize = i;
+	}
+
+	public void setYSize(int k) {
+		ySize = k;
+	}
+
+	public void smallSize() {
+		setXSize(5);
+		setYSize(5);
+	}
+
+	public void medSize() {
+		setXSize(10);
+		setYSize(10);
+
+	}
+
+	public void largeSize() {
+		setXSize(15);
+		setYSize(15);
+
 	}
 }// end class

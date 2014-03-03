@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 public class Paint {
 	public static void main(String[] args) {
 		// Image icons
+
 		// Start Colour Icons
 		ImageIcon blackIcon = new ImageIcon("bin\\iconColours\\blackIcon.gif");
 		ImageIcon redIcon = new ImageIcon("bin\\iconColours\\redIcon.gif");
@@ -30,15 +31,17 @@ public class Paint {
 		ImageIcon eraserIcon = new ImageIcon("bin\\toolIcons\\eraserIcon.gif");
 		ImageIcon pencilIcon = new ImageIcon("bin\\toolIcons\\pencilIcon.gif");
 		// End tools Icons
+
 		// End Image Icons
 
-		JFrame frame = new JFrame("Paint 2.0"); // sets title
+		// Start Frame Settings
+		final JFrame frame = new JFrame("Paint 2.0"); // sets title
 		final Painter painter = new Painter(); // creates the paint program
-		Container content = frame.getContentPane(); // Creates a Container
+		final Container content = frame.getContentPane(); // Creates a Container
 		content.setLayout(new BorderLayout()); // content layout style
 		content.add(painter, BorderLayout.CENTER); // centers painter
+		// End frame Settings
 
-		//
 		// Creates the buttons with their events.
 
 		JButton clearButton = new JButton(clearIcon);
@@ -115,18 +118,38 @@ public class Paint {
 		eraserButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painter.eraserTool();
-			}
-		});
+			}// End actionPerformed
+		});// End actionListener
 
 		JButton pencilButton = new JButton(pencilIcon);
 		pencilButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painter.pencilTool();
+			}// End actionPerformed
+		});// End actionListener
+
+		JButton smallButton = new JButton("Small");
+		smallButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painter.smallSize();
+			}
+		});
+
+		JButton medButton = new JButton("Medium");
+		smallButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painter.medSize();
+			}
+		});
+
+		JButton largeButton = new JButton("Large");
+		smallButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painter.largeSize();
 			}
 		});
 
 		// END BUTTON EVENTS
-		//
 
 		// Start button sizes:
 		clearButton.setPreferredSize(new Dimension(16, 16));
@@ -140,11 +163,13 @@ public class Paint {
 
 		// START colourPanel
 		JPanel colourPanel = new JPanel();
+
 		// Setting the size of the panel.
 		colourPanel.setPreferredSize(new Dimension(32, 32));
 		colourPanel.setMinimumSize(new Dimension(32, 32));
 		colourPanel.setMaximumSize(new Dimension(32, 68));
 		// end JPanel Colour size settings
+
 		// adds the buttons to the panel
 		colourPanel.add(clearButton);
 		colourPanel.add(redButton);
@@ -153,7 +178,11 @@ public class Paint {
 		colourPanel.add(greenButton);
 		colourPanel.add(yellowButton);
 		colourPanel.add(blackButton);
+		colourPanel.add(smallButton);
+		colourPanel.add(medButton);
+		colourPanel.add(largeButton);
 		// end adding buttons
+
 		// END colourPanel
 
 		// Start toolButton size
@@ -171,6 +200,8 @@ public class Paint {
 		toolPanel.setMinimumSize(new Dimension(32, 32));
 		toolPanel.setMaximumSize(new Dimension(32, 68));
 		// end size toolPanel
+
+		// Start toolPanel
 		toolPanel.add(circleButton);
 		toolPanel.add(squareButton);
 		toolPanel.add(sharpieButton);
